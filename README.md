@@ -2,6 +2,8 @@
 
 Evil Chef is a library that allows running Chef as a library from other applications.
 
+[![Build Status](https://travis-ci.org/avishai-ish-shalom/evil-chef.png)](https://travis-ci.org/avishai-ish-shalom/evil-chef)
+
 ## Installation
 
 Add this line to your application's Gemfile:
