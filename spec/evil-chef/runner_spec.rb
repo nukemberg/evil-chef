@@ -7,6 +7,7 @@ describe EvilChef::Runner do
 	end
 	describe "#recipe_eval" do
 		it "should run a recipe successfully" do
+			FileUtils.rm "/tmp/test.txt" if File.exists? "/tmp/test.txt" 
 			@runner.recipe_eval do
 				log "TEst"
 				file "/tmp/test.txt" do
@@ -14,7 +15,6 @@ describe EvilChef::Runner do
 				end
 			end
 			expect(File.read("/tmp/test.txt")).to eq("TEST")
-			FileUtils.rm "/tmp/test.txt"
 		end
 		it "`recipe_eval` should return a run_status object" do
 			run_status = @runner.recipe_eval do
