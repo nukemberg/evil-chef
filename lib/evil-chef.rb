@@ -24,7 +24,11 @@ module EvilChef
 			recipe = ::Chef::Recipe.new("(evil-chef cookbook)", "(evil-chef recipe)", run_context)
 			recipe.instance_eval(&block)
 			runner = ::Chef::Runner.new(run_context)
-			runner.converge
+			begin
+				runner.converge
+			rescue Exception => e
+				@chef_client.run_status.exception = e
+			end
 			@chef_client.run_status
 		end
 

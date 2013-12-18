@@ -22,12 +22,23 @@ describe EvilChef::Runner do
 			expect(run_status).to be_kind_of(Chef::RunStatus)
 		end
 
-		it "should throw an exception when the recipe fails" do
+		it "should throw an exception when the recipe cannot compile" do
 			expect do
 				runner.recipe_eval do
 					dlksdsjldsf
 				end
 			end.to raise_error(NameError)
+		end
+
+		it "should return run_status with failure data when recipe fails" do
+			run_status = runner.recipe_eval do
+				ruby_block "test" do
+					block do
+						raise RuntimeError.new("test")
+					end
+				end
+			end
+			expect(run_status.success?).to be(false)
 		end
 	end
 
