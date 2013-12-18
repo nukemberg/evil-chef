@@ -25,6 +25,11 @@ module EvilChef
 			recipe.instance_eval(&block)
 			runner = ::Chef::Runner.new(run_context)
 			runner.converge
+			@chef_client.run_status
+		end
+
+		def node
+			@chef_client.node
 		end
 	end
 end
