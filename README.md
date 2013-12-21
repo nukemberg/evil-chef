@@ -20,7 +20,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Require the library, instanciate a runner objet, then use the `recipe_eval` or `manage_resource` methods. E.g.:
+
+    require 'evil-chef'
+    chef_runner = EvilChef.new
+    chef_runner.recipe_eval do
+        package "ntp"
+        service "ntp" do
+            action [:start, :enable]
+        end
+    end
+
+    chef_runner.manage_resource(:service, "cups", :disable)
+
+The Runner object will run Ohai when initializing, so init is a little slow. The runner objet also keeps the state of the node object between recipe runs, accessible via the `node` attribute.
 
 ## Contributing
 
