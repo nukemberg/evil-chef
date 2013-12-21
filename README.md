@@ -23,7 +23,7 @@ Or install it yourself as:
 Require the library, instanciate a runner objet, then use the `recipe_eval` or `manage_resource` methods. E.g.:
 
     require 'evil-chef'
-    chef_runner = EvilChef.new
+    chef_runner = EvilChef::Runner.new
     chef_runner.recipe_eval do
         package "ntp"
         service "ntp" do
