@@ -42,6 +42,22 @@ describe EvilChef::Runner do
 		end
 	end
 
+	describe "#manage_resource" do
+		it "should manage a single resource" do
+			test_file = "/tmp/test-file-single-#{rand(10000).to_i}.txt"
+			FileUtils.rm_f(test_file)
+			runner.manage_resource(:file, test_file, :create)
+			expect(File.exists?(test_file)).to be(true)
+		end
+		it "should manage a resource with attributes" do
+			test_file = "/tmp/test-file-content-#{rand(10000).to_i}.txt"
+			FileUtils.rm_f(test_file)
+			random_content = Array.new(100) { (34 + rand(92)).chr }.join
+			runner.manage_resource(:file, test_file, :create, :content => random_content)
+			File.read(test_file) == random_content
+		end
+	end
+
 	it "should expose the node object" do
 		expect(runner.node).to be_kind_of(Chef::Node)
 	end

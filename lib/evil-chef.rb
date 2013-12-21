@@ -35,5 +35,20 @@ module EvilChef
 		def node
 			@chef_client.node
 		end
+
+		def manage_resource(type_symbol, name, action, opts={})
+			run_context = init_run_context
+			resource_class = Chef::Resource.resource_for_node(type_symbol, run_context.node)
+			resource = resource_class.new(name, run_context)
+			opts.each do |opt, val|
+				resource.send(opt, val)
+			end
+			begin
+				resource.run_action(action)
+				true
+			rescue Exception => e
+				false
+			end
+		end
 	end
 end
